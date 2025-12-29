@@ -14,7 +14,6 @@ function openTab(evt, tabName) {
 
     // Get all elements with class="tablinks" and remove the class "active"
     tablinks = document.getElementsByClassName("tablinks");
-    console.table(tablinks); 
     for (i = 0; i < tablinks.length; i++) {
         if (tablinks[i].classList.contains("active")) {
             tablinks[i].classList.remove("active");
@@ -24,13 +23,4 @@ function openTab(evt, tabName) {
     // Show the current tab, and add an "active" class to the button that opened the tab
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.classList.add("active");
-
-    if (tabName === 'inventory') {
-        // yes we are aware of the bug that causes double rendering here
-        // but this is the simplest non working fix for now
-        clearInventoryListRender();
-        refreshInventoryList();
-    }
-
-    resetSelected();
 }
