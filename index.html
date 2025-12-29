@@ -22,23 +22,9 @@
         </div>
     </div>
 
-    <div id="pillboxList">
-        <div class="pillboxListEl">
-            <p class="pillboxName">Pillbox 1</p>
-            <p class="pillboxStatus">Connected</p>
-            <p class="pillboxConfig">Opens at 9:46 AM: 3/10 every 6 hours</p>
-        </div>
-        <div class="pillboxListEl">
-            <p class="pillboxName">Pillbox 1</p>
-            <p class="pillboxStatus">Connected</p>
-            <p class="pillboxConfig">Opens at 9:46 AM: 3/10 every 6 hours</p>
-        </div>
-        <div class="pillboxListEl">
-            <p class="pillboxName">Pillbox 1</p>
-            <p class="pillboxStatus">Connected</p>
-            <p class="pillboxConfig">Opens at 9:46 AM: 3/10 every 6 hours</p>
-        </div>
-        <div id="addPillbox" class="pillboxListEl">
+    <div id="pillboxList"></div>
+    <div id="pillboxListAddBox">
+        <div id="addPillbox" class="pillboxListEl" onclick="addNewDevice()">
             <div id="plusButton">+</div>
             <p id="addPillboxString">Add a new pillbox</p>
         </div>
@@ -53,13 +39,19 @@
 
 </div>
 
-
+<div id="deviceFormModal" class="modal hidden">
+    <div class="modal-content">
+        <span class="close" onclick="closeDeviceForm()">&times;</span>
+        <div id="deviceFormContainer"></div>
+    </div>
+</div>
 <div class="tab">
     <button class="tablinks" onclick="openTab(event, 'home')">Home</button>
     <button class="tablinks" onclick="openTab(event, 'settings')">Settings</button>
 </div>
 
 <script src="scripts/tab-navigation.js"></script>
+<script src="scripts/index.js"></script>
 </body>
 
 </html>
