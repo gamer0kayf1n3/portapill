@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modular Number Scroller</title>
+  <style>
+
+  </style>
+</head>
+<body>
+  <div class="container" id="container">
+    <!-- Scrollers will be added here -->
+  </div>
+
+  <script>
+    function createNumberScroller(min, max, initialValue) {
+      var wrapper = document.createElement('div');
+      wrapper.className = 'scroller-container';
+      
+      var highlightBar = document.createElement('div');
+      highlightBar.className = 'highlight-bar';
+      
+      var scroller = document.createElement('div');
+      scroller.className = 'scroller';
+      
+      var topPadding = document.createElement('div');
+      topPadding.className = 'padding';
+      
+      var bottomPadding = document.createElement('div');
+      bottomPadding.className = 'padding';
+      
+      scroller.appendChild(topPadding);
+      scroller.appendChild(bottomPadding);
+      
+      wrapper.appendChild(highlightBar);
+      wrapper.appendChild(scroller);
+      
+      var itemHeight = 40;
+      var selectedValue = initialValue || min;
+      
+      for (var i = min; i <= max; i++) {
+        var item = document.createElement('div');
+        item.className = 'scroller-item';
+        item.textContent = String(i).padStart(2, '0');
+        item.dataset.value = i;
+        
+        item.addEventListener('click', function() {
+          scrollToValue(parseInt(this.dataset.value));
+        });
+        
+        scroller.insertBefore(item, bottomPadding);
+      }
+      
+      function scrollToValue(value) {
+        var items = scroller.querySelectorAll('.scroller-item');
+        var index = value - min;
+        var scrollTop = index * itemHeight;
+        scroller.scrollTo({
+          top: scrollTop,
+          behavior: 'smooth'
+        });
+        selectedValue = value;
+        updateSelected();
+      }
+      
+      function updateSelected() {
+        var items = scroller.querySelectorAll('.scroller-item');
+        var scrollTop = scroller.scrollTop;
+        var centerIndex = Math.round(scrollTop / itemHeight);
+        
+        items.forEach(function(item, index) {
+          if (index === centerIndex) {
+            item.classList.add('selected');
+            selectedValue = parseInt(item.dataset.value);
+          } else {
+            item.classList.remove('selected');
+          }
+        });
+      }
+      
+      var scrollTimeout;
+      scroller.addEventListener('scroll', function() {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(updateSelected, 50);
+      });
+      
+      setTimeout(function() {
+        scrollToValue(initialValue || min);
+      }, 100);
+      
+      return {
+        element: wrapper,
+        getValue: function() {
+          return selectedValue;
+        },
+        setValue: function(value) {
+          scrollToValue(value);
+        }
+      };
+    }
+    
+    function createSeparator(text) {
+      var separator = document.createElement('div');
+      separator.className = 'separator';
+      separator.textContent = text;
+      return separator;
+    }
+    
+    var container = document.getElementById('container');
+    
+    var scroller1 = createNumberScroller(1, 99, 50);
+    container.appendChild(scroller1.element);
+    
+    container.appendChild(createSeparator(':'));
+    
+    var scroller2 = createNumberScroller(0, 59, 30);
+    container.appendChild(scroller2.element);
+    
+    container.appendChild(createSeparator(':'));
+    
+    var scroller3 = createNumberScroller(0, 59, 0);
+    container.appendChild(scroller3.element);
+    
+    console.log('Get values:', scroller1.getValue(), scroller2.getValue(), scroller3.getValue());
+  </script>
+</body>
+</html>
