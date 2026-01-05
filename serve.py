@@ -1,18 +1,34 @@
+#!/usr/bin/env python3
+"""
+Simple HTTP server with correct MIME types for ES6 modules
+"""
 import http.server
 import socketserver
+import mimetypes
 
-class MyHandler(http.server.SimpleHTTPRequestHandler):
+# Fix MIME type for JavaScript modules
+mimetypes.add_type('application/javascript', '.js')
+mimetypes.add_type('text/javascript', '.mjs')
+
+PORT = 8000
+
+class MyHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     def end_headers(self):
-        if self.path.endswith(".js"):
-            self.send_header("Content-Type", "application/javascript")
-        self.send_header("Cache-Control", "no-store, no-cache, must-revalidate")
+        # Add headers for ES6 modules
+        self.send_header('Cache-Control', 'no-store, must-revalidate')
+        self.send_header('Expires', '0')
         super().end_headers()
 
-PORT = 82
+    def guess_type(self, path):
+        # Force correct MIME type for .js files
+        if path.endswith('.js'):
+            return 'application/javascript'
+        return super().guess_type(path)
 
-class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
-    allow_reuse_address = True
-
-with ThreadedTCPServer(("", PORT), MyHandler) as httpd:
-    print(f"Serving at http://localhost:{PORT}")
-    httpd.serve_forever()
+with socketserver.TCPServer(("", PORT), MyHTTPRequestHandler) as httpd:
+    print(f"Server running at http://localhost:{PORT}/")
+    print("Press Ctrl+C to stop")
+    try:
+        httpd.serve_forever()
+    except KeyboardInterrupt:
+        print("\nServer stopped.")

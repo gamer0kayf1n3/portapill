@@ -6,55 +6,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PortaPill</title>
     <link rel="stylesheet" href="style.css">
-</head> <body>
-<div class="tabcontent" id="home">
+</head>
 
-    <h3>Home</h3>
+<body>
+    <div class="tabcontent" id="home">
+        <h3>Home</h3>
 
-    <div id="focusBoxParent">
-        <div id="focusBox">
-            <div id="focusBoxContent">
-                <p id="toptext">The next alarm is</p>
-                <p id="pillboxText">Pillbox 1</p>
-                <p id="timeText">in 5 minutes</p>
-                <p id="configText">3rd out of 10th time every 6 hours</p>
+        <div id="focusBoxParent">
+            <div id="focusBox">
+                <div id="focusBoxContent">
+                    <p id="toptext">The next alarm is</p>
+                    <p id="pillboxText">Pillbox 1</p>
+                    <p id="timeText">in 5 minutes</p>
+                    <p id="configText">3rd out of 10th time every 6 hours</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="pillboxList"></div>
+        <div id="pillboxListAddBox">
+            <div id="addPillbox" class="pillboxListEl" onclick="addNewDevice()">
+                <div id="plusButton">+</div>
+                <p id="addPillboxString">Add a new pillbox</p>
             </div>
         </div>
     </div>
 
-    <div id="pillboxList"></div>
-    <div id="pillboxListAddBox">
-        <div id="addPillbox" class="pillboxListEl" onclick="addNewDevice()">
-            <div id="plusButton">+</div>
-            <p id="addPillboxString">Add a new pillbox</p>
+    <div class="tabcontent" id="settings">
+        <h3>Settings</h3>
+    </div>
+
+    <div id="deviceFormModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close" onclick="closeDeviceForm()">&times;</span>
+            <div id="deviceFormContainer"></div>
         </div>
     </div>
 
-</div>
-<div class="tabcontent" id="settings">
-
-    <h3>Settings</h3>
-
-
-
-</div>
-
-<div id="deviceFormModal" class="modal hidden">
-    <div class="modal-content">
-        <span class="close" onclick="closeDeviceForm()">&times;</span>
-        <div id="deviceFormContainer"></div>
+    <div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'home')">Home</button>
+        <button class="tablinks" onclick="openTab(event, 'settings')">Settings</button>
     </div>
-</div>
-<div class="tab">
-    <button class="tablinks" onclick="openTab(event, 'home')">Home</button>
-    <button class="tablinks" onclick="openTab(event, 'settings')">Settings</button>
-</div>
 
-<script src="scripts/tab-navigation.js"></script>
-<script src="scripts/index.js"></script>
-<script src="scripts/range-input.js"></script>
-<script src="scripts/pillbox-sim.js"></script>
-<script src="scripts/focus-box-connector.js"></script>
+    <!-- Non-module scripts (keep as-is) -->
+    <script src="scripts/tab-navigation.js"></script>
+    <script src="scripts/range-input.js"></script>
+    <script src="scripts/pillbox-sim.js"></script>
+    <script src="scripts/focus-box-connector.js"></script>
+
+    <!-- Main application (ES6 module) -->
+    <script type="module" src="scripts/app.js"></script>
 </body>
 
 </html>
