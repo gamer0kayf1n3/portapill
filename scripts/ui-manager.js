@@ -47,7 +47,7 @@ export class UIManager {
     _renderDeviceCard(device) {
         const status = device.connected ? 'Connected' : 'Disconnected';
         const configText = this._getDeviceConfigText(device);
-        
+
         return `
             <div class="pillboxListEl" 
                  onclick="window.app.openDeviceForm(${device.id})" 
@@ -82,8 +82,10 @@ export class UIManager {
 
         const hours = Math.floor(nextAlarmMinutes / 60);
         const minutes = nextAlarmMinutes % 60;
-        return `Next: ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')} - Dose ${nextAlarmIndex + 1}/${device.alarmConfig.count} every ${device.alarmConfig.frequency}h`;
+        const freqText = device.alarmConfig.frequency === 1 ? '1 hour' : `${device.alarmConfig.frequency} hours`;
+        return `Next: ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')} - Dose ${nextAlarmIndex + 1}/${device.alarmConfig.count} every ${freqText}`;
     }
+
 
     /**
      * Opens the device configuration modal
@@ -93,7 +95,7 @@ export class UIManager {
      */
     openDeviceModal(device, createNumberScroller, createSeparator) {
         this.currentDeviceId = device.id;
-        
+
         const formContainer = document.getElementById('deviceFormContainer');
         if (!formContainer) return;
 
@@ -183,8 +185,8 @@ export class UIManager {
 
         // Count scroller
         device.scrollers.count = createNumberScroller(
-            1, 99, 
-            device.alarmConfig.count || 1, 
+            1, 99,
+            device.alarmConfig.count || 1,
             `count-${device.id}`
         );
         container.appendChild(device.scrollers.count.element);
@@ -192,8 +194,8 @@ export class UIManager {
 
         // Frequency scroller
         device.scrollers.frequency = createNumberScroller(
-            1, 24, 
-            device.alarmConfig.frequency || 1, 
+            1, 24,
+            device.alarmConfig.frequency || 1,
             `frequency-${device.id}`
         );
         container.appendChild(device.scrollers.frequency.element);
@@ -202,8 +204,8 @@ export class UIManager {
         // Hour scroller
         const hours = Math.floor((device.alarmConfig.startTime || 0) / 60);
         device.scrollers.hour = createNumberScroller(
-            0, 23, 
-            hours, 
+            0, 23,
+            hours,
             `hour-${device.id}`
         );
         container.appendChild(device.scrollers.hour.element);
@@ -212,8 +214,8 @@ export class UIManager {
         // Minute scroller
         const minutes = (device.alarmConfig.startTime || 0) % 60;
         device.scrollers.minute = createNumberScroller(
-            0, 59, 
-            minutes, 
+            0, 59,
+            minutes,
             `minute-${device.id}`
         );
         container.appendChild(device.scrollers.minute.element);
@@ -352,8 +354,8 @@ export class UIManager {
 
         const startTimeMinutes = hours * 60 + minutes;
         const { nextAlarmMinutes, nextAlarmIndex } = device.calculateNextAlarm(
-            startTimeMinutes, 
-            frequency, 
+            startTimeMinutes,
+            frequency,
             count
         );
 
@@ -437,7 +439,7 @@ export class UIManager {
                 messageEl.classList.add('hidden');
                 this.messageTimeouts.delete(deviceId);
             }, CONSTANTS.MESSAGE_TIMEOUT);
-            
+
             this.messageTimeouts.set(deviceId, timeout);
         }
     }

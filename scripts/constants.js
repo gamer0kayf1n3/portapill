@@ -6,31 +6,17 @@
  */
 
 export const CONSTANTS = {
-    // Time synchronization
-    TIME_SYNC_INTERVAL: 10000,      // Check time every 10 seconds
-    TIME_SYNC_THRESHOLD: 10,        // Sync if off by more than 10 seconds
-    
-    // Time calculations
+    CONNECTION_TIMEOUT: 30000,  // Increased from 10000 to 15000ms
+    RECONNECT_DELAY: 2000,
+    RECONNECT_MAX_ATTEMPTS: 5,
+    TIME_SYNC_INTERVAL: 60000,
+    TIME_SYNC_THRESHOLD: 5,
+    CLOCK_UPDATE_INTERVAL: 1000,
+    NEXT_ALARM_UPDATE_INTERVAL: 5000,
+    MESSAGE_TIMEOUT: 3000,
+    MAX_HISTORY_ENTRIES: 50,
     SECONDS_PER_DAY: 86400,
-    MINUTES_PER_DAY: 1440,
-    
-    // UI timeouts
-    MESSAGE_TIMEOUT: 5000,          // Hide messages after 5 seconds
-    CONNECTION_TIMEOUT: 30000,      // Connection attempt timeout
-    
-    // Limits
-    MAX_HISTORY_ENTRIES: 100,       // Maximum alarm history to store
-    
-    // Update intervals
-    CLOCK_UPDATE_INTERVAL: 1000,    // Update clock display every second
-    NEXT_ALARM_UPDATE_INTERVAL: 60000, // Update next alarm every minute
-    
-    // Reconnection
-    RECONNECT_DELAY: 2000,          // Wait 2 seconds before reconnecting
-    RECONNECT_MAX_ATTEMPTS: 3,      // Try reconnecting 3 times
-    
-    // Storage
-    STORAGE_KEY: 'pillbox_devices'  // localStorage key
+    MINUTES_PER_DAY: 1440
 };
 
 /**

@@ -49,9 +49,9 @@ class PortaPillApp {
      */
     _loadDevices() {
         const { devices: savedDevices, deviceIdCounter } = StorageManager.loadDevices();
-        
+
         this.deviceIdCounter = deviceIdCounter;
-        this.devices = savedDevices.map(deviceData => 
+        this.devices = savedDevices.map(deviceData =>
             new PillboxDevice(deviceData.id, deviceData, this.uiManager)
         );
 
@@ -113,7 +113,7 @@ class PortaPillApp {
         this.deviceIdCounter++;
         const device = new PillboxDevice(this.deviceIdCounter, null, this.uiManager);
         this.devices.push(device);
-        
+
         this._saveDevices();
         this._renderDevices();
         this.openDeviceForm(device.id);
@@ -132,7 +132,7 @@ class PortaPillApp {
 
         device.destroy();
         this.devices = this.devices.filter(d => d.id !== id);
-        
+
         this._saveDevices();
         this.closeDeviceForm();
         this._renderDevices();
